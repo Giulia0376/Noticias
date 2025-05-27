@@ -1,45 +1,53 @@
 package com.example.noticias.adapters
-
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.noticias.data.News
-import com.example.noticias.data.NewsSearchResponse
-import com.example.noticias.databinding.ItemNewBinding
-
+import com.example.noticias.R
+import com.example.noticias.data.Noticias
+import com.example.noticias.data.NoticiasSearchResponse
+import com.example.noticias.databinding.ItemNewsBinding
 import com.squareup.picasso.Picasso
 
-class NewsAdapter(
-    private val newsList: List<News>,
-    private val onClick: (News) -> Unit
-) : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
-        val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NewsViewHolder(binding)
+class NewAdapter(
+    private var items: List<Noticias>,
+    private val onClickListener: (Int) -> Unit
+) : Adapter<NewViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewViewHolder {
+        val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        return NewViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        val article = newsList[position]
-        holder.bind(article, onClick)
+    override fun getItemCount(): Int {
+        return items.size
     }
 
-    override fun getItemCount(): Int = newsList.size
-
-    class NewsViewHolder(private val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(article: news, onClick: (Article) -> Unit) {
-            binding.title.text = article.title
-            binding.description.text = article.description
-            Glide.with(binding.image.context).load(article.urlToImage).into(binding.image)
-            binding.root.setOnClickListener { onClick(article) }
+    override fun onBindViewHolder(holder: NewViewHolder, position: Int) {
+        val superhero = items[position]
+        holder.render(superhero)
+        holder.itemView.setOnClickListener {
+            onClickListener(position)
         }
     }
+
+    fun updateItems(items: List<Noticias>) {
+        this.items = items
+        notifyDataSetChanged()
+    }
 }
+
+class NewViewHolder(val binding: ItemNewsBinding) : ViewHolder(binding.root) {
+
+
+    fun render(noticias: Noticias) {
+        binding.nameTextView.text = noticias.title
+        Picasso.get().load(noticias.urlToImage).into(binding.avatarImageView)
+    }
+}
+
 
 

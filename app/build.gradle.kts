@@ -36,14 +36,18 @@ android {
     buildFeatures{
         viewBinding = true
     }
+
 }
 
 dependencies {
 
+    implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.room.runtime.android)
     // Retrofit
     val retrofitVersion = "2.11.0"
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Picasso
     implementation("com.squareup.picasso:picasso:2.8")

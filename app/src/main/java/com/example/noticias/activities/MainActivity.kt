@@ -1,58 +1,84 @@
 package com.example.noticias.activities
-
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.noticias.R
-import com.example.noticias.adapters.NewsAdapter
-import com.example.noticias.data.News
+import com.example.noticias.adapters.NewAdapter
+import com.example.noticias.api.NewsService
+import com.example.noticias.data.Noticias
 import com.example.noticias.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 //Para mostrar las noticias
+
 class MainActivity : AppCompatActivity() {
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: NewsAdapter
-    private lateinit var newsList: List<News>
+    lateinit var binding: ActivityMainBinding
+    lateinit var adapter: NewAdapter
+
+    var noticiaslist: List<Noticias> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        enableEdgeToEdge()  // Asegúrate que esté definido
 
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = NewsAdapter(newsList) { article ->
-            val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("article", article)
-            startActivity(intent)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+
+        //setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
-        recyclerView.adapter = adapter
 
-        fetchNews()
+
+        adapter = NewAdapter(noticiaslist) { position ->
+            val noticias = noticiaslist[position]
+
+            val intent = Intent(this,DetailActivity2::class.java)
+            //intent.putExtra(DetailActivity2.NOTICIAS_ID, noticias.id)
+            startActivity(intent)
+
+        }
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = GridLayoutManager(this,2)
+
+        getTopNews()
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.activity_main_menu, menu)
+        return true
     }
 
-    private fun fetchNews() {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_search -> {
+                startActivity(Intent(this, SettingsActivity1::class.java))
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun getTopNews() {
         CoroutineScope(Dispatchers.IO).launch {
-            val response = RetrofitInstance.api.getNews(
-                "apple",
-                "2025-05-19",
-                "2025-05-19",
-                "popularity",
-                "YOUR_API_KEY"
-            )
-            if (response.isSuccessful) {
-                newsList = response.body()?.articles ?: emptyList()
-                withContext(Dispatchers.Main) {
-                    adapter.notifyDataSetChanged()
-                }
+            // Llamada en segundo plano
+            val result = NewsService.getInstance().getTopNews()
+            runOnUiThread {
+                // Modificar UI
+                noticiaslist = result.articles
+                adapter.updateItems(noticiaslist)
             }
         }
     }
