@@ -2,6 +2,8 @@ package com.example.noticias.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -9,6 +11,7 @@ import com.example.noticias.R
 import com.example.noticias.data.Noticias
 import com.example.noticias.data.NoticiasSearchResponse
 import com.example.noticias.databinding.ItemNewsBinding
+import com.example.noticias.utils.SessionManager
 import com.squareup.picasso.Picasso
 
 
@@ -42,12 +45,15 @@ class NewAdapter(
 
 class NewViewHolder(val binding: ItemNewsBinding) : ViewHolder(binding.root) {
 
-
     fun render(noticias: Noticias) {
         binding.nameTextView.text = noticias.title
         Picasso.get().load(noticias.urlToImage).into(binding.avatarImageView)
     }
 }
+
+
+
+
 
 
 

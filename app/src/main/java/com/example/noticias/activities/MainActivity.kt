@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.noticias.R
 import com.example.noticias.adapters.NewAdapter
 import com.example.noticias.api.NewsService
@@ -47,12 +48,22 @@ class MainActivity : AppCompatActivity() {
             val noticias = noticiaslist[position]
 
             val intent = Intent(this,DetailActivity2::class.java)
-            //intent.putExtra(DetailActivity2.NOTICIAS_ID, noticias.id)
+            //ojo aqui
+            intent.putExtra(DetailActivity2.NOTICIAS_TITLE, noticias.title)
+            intent.putExtra(DetailActivity2.NOTICIAS_IMAGE, noticias.urlToImage)
+            intent.putExtra(DetailActivity2.NOTICIAS_DESCRIPTION, noticias.description)
+            intent.putExtra(DetailActivity2.NOTICIAS_CONTENT, noticias.content)
+            intent.putExtra(DetailActivity2.NOTICIAS_AUTHOR, noticias.author)
+            intent.putExtra(DetailActivity2.NOTICIAS_PUBLISHED, noticias.publishedAt)
+            intent.putExtra(DetailActivity2.NOTICIAS_URL, noticias.url)
+            intent.putExtra(DetailActivity2.NOTICIAS_SOURCE_ID, noticias.source.id)
+            intent.putExtra(DetailActivity2.NOTICIAS_SOURCE_NAME, noticias.source.name)
             startActivity(intent)
 
         }
+
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = GridLayoutManager(this,2)
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         getTopNews()
     }

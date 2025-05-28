@@ -8,11 +8,11 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/horoscopeImageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:id="@+id/noticiasImageView"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="8dp"
+        android:scaleType="centerCrop"
         tools:src=""/>
 
     <TextView
@@ -26,12 +26,14 @@
         android:visibility="gone"/>
 
     <TextView
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:textStyle="bold"
         android:gravity="center"
-        android:text="OpenAI's Big Bet That Jony Ive Can Make AI Hardware Work"/>
+        android:text="OpenAI's Big Bet That Jony Ive Can Make AI Hardware Work"
+        android:padding="8dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -41,52 +43,29 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/horoscopeLuckTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:padding="16dp"/>
         </ScrollView>
 
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center"
-            />
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="18sp"
+            tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."/>
+
+
     </FrameLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/showInBrowserButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="16dp">
-
-        <Button
-            android:id="@+id/menu_prev"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Previous"
-            android:drawableLeft="@drawable/ic_prev"
-            android:textSize="18sp"/>
-
-        <Space
-            android:layout_width="16dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/menu_next"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Next"
-            android:drawableRight="@drawable/ic_next"
-            android:textSize="18sp"/>
-
-    </LinearLayout>
+        android:text="Ver en el navegador"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"/>
 
 </LinearLayout>
 
