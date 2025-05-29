@@ -19,6 +19,7 @@ import com.example.noticias.utils.SessionManager
 import com.squareup.picasso.Picasso
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
+import com.example.noticias.data.Usuario
 
 
 class DetailActivity2 : AppCompatActivity() {
@@ -99,7 +100,7 @@ class DetailActivity2 : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_favorite -> {
                 if (isFavorite) {
-                    session.setFavoriteNoticias("")
+                    //session.setFavoriteNoticias("")
 
                 } else {
                     //session.setFavoriteNoticias(NOTICIAS_ID)

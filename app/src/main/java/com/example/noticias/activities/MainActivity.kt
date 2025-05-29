@@ -10,6 +10,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +22,7 @@ import com.example.noticias.adapters.NewAdapter
 import com.example.noticias.api.NewsService
 import com.example.noticias.data.Noticias
 import com.example.noticias.databinding.ActivityMainBinding
+import com.example.noticias.utils.SessionManager
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation
 import com.google.mlkit.nl.translate.TranslatorOptions
@@ -96,19 +99,35 @@ class MainActivity : AppCompatActivity() {
 
         getTopNews()
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_main_menu, menu)
-        return true
 
+        val menuItem = menu.findItem(R.id.menu_search)
+        val searchView = menuItem.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_search -> {
-                startActivity(Intent(this, SettingsActivity1::class.java))
-                true
+        when (item.itemId) {
+            R.id.menu_logout -> {
+                SessionManager(this).removeUser()
+                val intent = Intent(this, UsuarioActivity::class.java)
+                startActivity(intent)
+                finish()
+                return true
             }
-            else -> super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 
