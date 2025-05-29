@@ -1,6 +1,8 @@
 package com.example.noticias.activities
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
@@ -16,6 +18,7 @@ import com.example.noticias.databinding.ActivityDetail2Binding
 import com.example.noticias.utils.SessionManager
 import com.squareup.picasso.Picasso
 import androidx.core.net.toUri
+import androidx.core.text.HtmlCompat
 
 
 class DetailActivity2 : AppCompatActivity() {
@@ -77,7 +80,12 @@ class DetailActivity2 : AppCompatActivity() {
             val browserIntent = Intent(Intent.ACTION_VIEW, noticias.url.toUri())
             startActivity(browserIntent)
         }
+
+       // menu color
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FF0000")))
+
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.new_menu, menu)

@@ -49,6 +49,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:$retrofitVersion")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    // Traducción
+    implementation ("com.google.mlkit:translate:17.0.1")
+
     // Picasso
     implementation("com.squareup.picasso:picasso:2.8")
 

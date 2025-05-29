@@ -32,14 +32,14 @@
         android:textSize="18dp"
         android:textStyle="bold"
         android:gravity="center"
+        android:background="#E8E8E8"
         android:text="OpenAI's Big Bet That Jony Ive Can Make AI Hardware Work"
-        android:padding="8dp"/>
+        android:padding="10dp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#EDFDFF">
+        android:layout_weight="1">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -52,8 +52,8 @@
             android:id="@+id/descriptionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:textSize="18sp"
+            android:padding="18dp"
+            android:textSize="19sp"
             tools:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."/>
 
 
@@ -65,6 +65,7 @@
         android:layout_height="wrap_content"
         android:text="Ver en el navegador"
         android:layout_gravity="center"
+        android:backgroundTint="#FF0000"
         android:layout_margin="16dp"/>
 
 </LinearLayout>

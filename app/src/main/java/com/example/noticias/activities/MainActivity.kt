@@ -1,11 +1,16 @@
 package com.example.noticias.activities
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +20,9 @@ import com.example.noticias.adapters.NewAdapter
 import com.example.noticias.api.NewsService
 import com.example.noticias.data.Noticias
 import com.example.noticias.databinding.ActivityMainBinding
+import com.google.mlkit.nl.translate.TranslateLanguage
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.TranslatorOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,6 +43,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // traducir al español
+        val options = TranslatorOptions.Builder()
+            .setSourceLanguage(TranslateLanguage.ENGLISH)
+            .setTargetLanguage(TranslateLanguage.SPANISH)
+            .build()
+        val translator = Translation.getClient(options)
+
+// Descargar el modelo si es necesario
+        translator.downloadModelIfNeeded()
+            .addOnSuccessListener {
+                translator.translate("Hello, how are you?")
+                    .addOnSuccessListener { translatedText ->
+                        Log.d("Traductor", translatedText) // Muestra: "Hola, ¿cómo estás?"
+                    }
+            }
+
+
 
         //setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -42,6 +67,10 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        //menu color
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FF0000")))
+
 
 
         adapter = NewAdapter(noticiaslist) { position ->
@@ -70,6 +99,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_main_menu, menu)
         return true
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
