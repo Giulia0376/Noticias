@@ -13,10 +13,8 @@ La aplicación también permite cerrar sesión desde un menú desplegable ubicad
 •	SettingsActivity1
 -	El nombre y correo del usuario se guardan en SharedPreferences cuando presiona el botón "Guardar Usuario".
    Esto permite mantener la sesión activa incluso si se cierra y vuelve a abrir la app.
--	La lista de noticias que se muestra en MainActivity2 proviene de una llamada a un API Rest
--	En la AppBar se encuentra un ícono de búsqueda y un menú con opciones como "Cerrar sesión" o "Ir a ajustes".
-
--	Icono personalizado: Se ha incorporado el logo de noticias como ícono de la app, mejorando la presentación visual.
+-	En la AppBar se encuentra un ícono de búsqueda y un menú con opciones como "Cerrar sesión".
+-	Se ha incorporado el logo de noticias como ícono de la app, mejorando la presentación visual.
 
 
 
